@@ -1,0 +1,50 @@
+[
+   {
+          "field": "nombre",
+          "label": "nombre",
+          "searchable": true,
+          "visible": true
+        },   {
+          "field": "presupuestoGlobal.pgRealMes",
+          "label": "Real del Mes",
+          "searchable": true,
+          "visible": true
+        },
+        {
+          "field": "pgRealAcomulado",
+          "label": "Real Acomulado",
+          "searchable": true,
+          "visible": true
+        },        {
+          "field": "pgEstimadoMes",
+          "label": "Estimado del Mes",
+          "searchable": true,
+          "visible": true
+        },        {
+          "field": "pgEstimadoCierreAnno",
+          "label": "Estimado Cierre Año",
+          "searchable": true,
+          "visible": true
+        },        {
+          "field": "pcRealMes",
+          "label": "Real del Mes",
+          "searchable": true,
+          "visible": true
+        },        {
+          "field": "pcRealAcomulado",
+          "label": "Real Acomulado",
+          "searchable": true,
+          "visible": true
+        },        {
+          "field": "pcEstimadoMes",
+          "label": "Estimado del Mes",
+          "searchable": true,
+          "visible": true
+        },
+  {
+          "field": "pcEstimadoCierreAnno",
+          "label": "Estimado Cierre del Año",
+          "searchable": true,
+          "visible": true
+        }
+  ]

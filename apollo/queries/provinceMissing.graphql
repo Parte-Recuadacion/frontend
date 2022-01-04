@@ -1,0 +1,6 @@
+query provinceMissing{
+  provinceMissing{
+    dpa
+    nombre
+  }
+}

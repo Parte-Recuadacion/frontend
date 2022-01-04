@@ -1,0 +1,20 @@
+mutation provinceData($anno: String!, $mes: String!){
+  provinceData(anno: $anno, mes: $mes){
+    province{
+        nombre
+      presupuestoGlobal{
+        pgRealMes
+        pgRealAcomulado
+        pgEstimadoMes
+        pgEstimadoCierreAnno
+      }
+      presupuestoCentral{
+        pcRealMes
+        pcRealAcomulado
+        pcEstimadoMes
+        pcEstimadoCierreAnno
+      }
+      enviadoA
+    }
+  }
+}

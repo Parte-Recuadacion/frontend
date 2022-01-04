@@ -1,8 +1,14 @@
 <template>
-  <div class="container">
-    <div class="columns is-centered is-fullwidth">
-      <div class="column is-6" style="margin-top: 12px">
-        <p class="has-text-centered font-size-5 margin-bottom-20">
+  <div>
+    <div class="columns is-centered">
+      <div
+        class="column is-6"
+        style="margin-top: 12px; border: solid 1pt #ced2e1"
+      >
+        <p
+          class="has-text-centered font-size-5 margin-bottom-20"
+          style="color: #0855f5"
+        >
           Presupuesto Global
         </p>
         <b-table v-if="provinceData" ref="table" :data="provinceData" hoverable>
@@ -37,8 +43,14 @@
           </b-table-column>
         </b-table>
       </div>
-      <div class="column is-6" style="margin-top: 12px">
-        <p class="has-text-centered font-size-5 margin-bottom-20">
+      <div
+        class="column is-5 margin-left-10"
+        style="margin-top: 12px; border: solid 1pt #ced2e1"
+      >
+        <p
+          class="has-text-centered font-size-5 margin-bottom-20"
+          style="color: #0855f5"
+        >
           Presupuesto Central
         </p>
         <b-table v-if="provinceData" ref="table" :data="provinceData" hoverable>

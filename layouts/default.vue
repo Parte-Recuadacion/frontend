@@ -54,11 +54,13 @@
           </div>
         </ul>
       </aside>
-
-      <div class="container column is-10">
+      <div v-if="$route.name !== 'history'" class="container column is-10">
         <Nuxt />
       </div>
     </section>
+    <div v-if="$route.name === 'history'">
+      <Nuxt />
+    </div>
   </div>
 </template>
 

@@ -1,6 +1,11 @@
 <template>
-  <div>
+  <div class="margin-bottom-50">
     <div class="margin-top-30">
+      <div class="has-text-centered">
+        <nuxt-link class="font-size-3" to="/">
+          Volver a la página principal
+        </nuxt-link>
+      </div>
       <br />
       <p class="has-text-centered font-size-5">
         Seleccione la provincia el mes y el año para ver su Parte de Recaudación
@@ -94,6 +99,9 @@
                 {{ props.row.presupuestoGlobal.pgEstimadoCierreAnno }}
               </b-table-column>
             </b-table>
+            <b>Total Real del Mes:</b> {{ totalpgRealMes }}
+            <br />
+            <b>Total Real Acomulado:</b> {{ totalpgRealAcomulado }}
           </div>
           <div
             class="column is-5 margin-left-10"
@@ -124,6 +132,9 @@
                 {{ props.row.presupuestoCentral.pcEstimadoCierreAnno }}
               </b-table-column>
             </b-table>
+            <b>Total Real del Mes:</b> {{ totalpcRealMes }}
+            <br />
+            <b>Total Real Acomulado:</b> {{ totalpcRealAcomulado }}
           </div>
         </div>
       </div>
@@ -229,6 +240,10 @@ export default {
             }
           })
           .then(({ data }) => {
+            this.totalpcRealMes = 0
+            this.totalpgRealMes = 0
+            this.totalpgRealAcomulado = 0
+            this.totalpcRealAcomulado = 0
             this.provinceData = data.provinceData.province
             for (let i = 0; i < this.provinceData.length; i++) {
               this.totalpgRealMes += parseFloat(
@@ -244,10 +259,10 @@ export default {
                 this.provinceData[i].presupuestoCentral.pcRealAcomulado
               )
             }
-            console.log(this.totalpgRealMes)
-            console.log(this.totalpgRealAcomulado)
-            console.log(this.totalpcRealMes)
-            console.log(this.totalpcRealAcomulado)
+            this.totalpgRealMes = this.totalpgRealMes.toFixed(1)
+            this.totalpgRealAcomulado = this.totalpgRealAcomulado.toFixed(1)
+            this.totalpcRealMes = this.totalpcRealMes.toFixed(1)
+            this.totalpcRealAcomulado = this.totalpcRealAcomulado.toFixed(1)
           })
       }
     }

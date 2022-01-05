@@ -7,8 +7,8 @@
           .format('dddd, MMMM Do YYYY')
       }}
       <br />
-      <nuxt-link class="" to="/manegement">
-        acceder a administración
+      <nuxt-link class="font-size-3" to="/manegement">
+        ver historial del Parte
       </nuxt-link>
     </p>
     <div class="margin-top-10">
@@ -137,7 +137,7 @@
         />
       </div>
     </div>
-    <div class="has-text-centered margin-top-40">
+    <div class="has-text-centered margin-top-30">
       <b-button
         class="is-primary"
         style="width: 20%"

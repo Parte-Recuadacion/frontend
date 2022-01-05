@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav
+    <!--nav
       class="navbar header has-shadow is-primary"
       role="navigation"
       aria-label="main navigation"
@@ -8,7 +8,7 @@
       <div class="navbar-brand">
         <a class="navbar-item" href="/"> </a>
       </div>
-    </nav>
+    </nav-->
 
     <section class="main-content columns">
       <aside

@@ -1,0 +1,34 @@
+mutation insertData(
+    $dpa: String!,
+    $nombre: String!,
+    $enviadoA: String!,
+    $enviadoEstaSemana: Boolean!,
+    $mes: String!,
+    $anno: String!,
+    $pgRealMes: Float!,
+    $pgRealAcomulado: Float!,
+    $pgEstimadoMes: Float!,
+    $pgEstimadoCierreAnno: Float,
+    $pcRealMes: Float!,
+    $pcRealAcomulado: Float!,
+    $pcEstimadoMes: Float!,
+    $pcEstimadoCierreAnno: Float){
+insertData(
+  dpa:$dpa ,
+  nombre:$nombre ,
+  enviadoA:$enviadoA ,
+  enviadoEstaSemana:$enviadoEstaSemana ,
+  mes:$mes ,
+  anno:$anno ,
+  pgRealMes:$pgRealMes ,
+  pgRealAcomulado:$pgRealAcomulado ,
+  pgEstimadoMes:$pgEstimadoMes,
+  pgEstimadoCierreAnno:$pgEstimadoCierreAnno ,
+  pcRealMes:$pcRealMes ,
+  pcRealAcomulado:$pcRealAcomulado ,
+  pcEstimadoMes: $pcEstimadoMes,
+  pcEstimadoCierreAnno:$pcEstimadoCierreAnno
+){
+  status
+}
+}

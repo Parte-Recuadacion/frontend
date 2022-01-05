@@ -1,5 +1,5 @@
-mutation provinceData($anno: String!, $mes: String!){
-  provinceData(anno: $anno, mes: $mes){
+mutation provinceData($provincia: String!, $anno: String!, $mes: String!){
+  provinceData(provincia: $provincia, anno: $anno, mes: $mes){
     province{
         nombre
       presupuestoGlobal{

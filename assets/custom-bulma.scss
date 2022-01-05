@@ -8,6 +8,7 @@ $warning-invert: findColorInvert($warning);
 $twitter: #4099FF;
 $twitter-invert:  findColorInvert($twitter);
 $table-sticky-header-height: 700px;
+$dropdown-content-max-height: 500px;
 $colors: (
     "white": ($white, $black),
     "black": ($black, $white),

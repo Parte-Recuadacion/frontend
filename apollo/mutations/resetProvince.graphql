@@ -1,0 +1,5 @@
+mutation resetProvince($dpa: String!){
+  resetProvince(dpa: $dpa){
+    status
+  }
+}

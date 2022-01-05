@@ -1,14 +1,28 @@
 export const state = () => ({
-  province: null
+  dpa: null,
+  nombre: null,
+  missingProvince: []
 })
 
 export const mutations = {
-  update(state, name) {
-    state.province = name
+  updateDpa(state, dpa) {
+    state.dpa = dpa
+  },
+  updateNombre(state, nombre) {
+    state.nombre = nombre
+  },
+  updateMissingProvince(state, arrProvince) {
+    state.missingProvince = arrProvince
   }
 }
 export const getters = {
-  get: state => {
-    return state.province
+  getName: state => {
+    return state.nombre
+  },
+  getDpa: state => {
+    return state.dpa
+  },
+  getProvince: state => {
+    return state.missingProvince
   }
 }

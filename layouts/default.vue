@@ -12,7 +12,7 @@
 
     <section class="main-content columns">
       <aside
-        v-show="$route.name !== 'history'"
+        v-show="$route.name !== 'manegement'"
         class="column is-3 section has-text-centered"
       >
         <b
@@ -54,11 +54,11 @@
           </div>
         </ul>
       </aside>
-      <div v-if="$route.name !== 'history'" class="container column is-10">
+      <div v-if="$route.name !== 'manegement'" class="container column is-10">
         <Nuxt />
       </div>
     </section>
-    <div v-if="$route.name === 'history'">
+    <div v-if="$route.name === 'manegement'">
       <Nuxt />
     </div>
   </div>
@@ -81,7 +81,8 @@ export default {
     chosenProvince(index) {
       this.selectedProvince = []
       this.selectedProvince.push(Number(index))
-      this.$store.commit('update', this.provinciasFaltantes[index].nombre)
+      this.$store.commit('updateDpa', this.provinciasFaltantes[index].dpa)
+      this.$store.commit('updateNombre', this.provinciasFaltantes[index].nombre)
     }
   }
 }

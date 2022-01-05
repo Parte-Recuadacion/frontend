@@ -7,19 +7,19 @@
           .format('dddd, MMMM Do YYYY')
       }}
       <br />
-      <nuxt-link class="" to="/history">
-        ver historial
+      <nuxt-link class="" to="/manegement">
+        acceder a administración
       </nuxt-link>
     </p>
     <div class="margin-top-10">
       <p
-        v-show="province"
+        v-show="provinceName"
         class="has-text-centered font-size-7"
         style="color: #0855f5;"
       >
-        {{ province }}
+        {{ provinceDpa + ' - ' + provinceName }}
       </p>
-      <p v-show="!province" class="has-text-centered font-size-6">
+      <p v-show="!provinceName" class="has-text-centered font-size-6">
         * Seleccione su provincia en la parte izquierda
       </p>
     </div>
@@ -52,7 +52,7 @@
           Presupuesto Global
         </p>
         <VuetifyMoney
-          v-model="realMes"
+          v-model="pgRealMes"
           :label="label1"
           :readonly="readonly1"
           :disabled="disabled1"
@@ -61,7 +61,7 @@
           :options="options1"
         />
         <VuetifyMoney
-          v-model="realAcomulado"
+          v-model="pgRealAcomulado"
           :label="label2"
           :readonly="readonly2"
           :disabled="disabled2"
@@ -70,7 +70,7 @@
           :options="options2"
         />
         <VuetifyMoney
-          v-model="estimadoMes"
+          v-model="pgEstimadoMes"
           :label="label3"
           :readonly="readonly3"
           :disabled="disabled3"
@@ -79,7 +79,7 @@
           :options="options3"
         />
         <VuetifyMoney
-          v-model="estimadoAnno"
+          v-model="pgEstimadoAnno"
           :label="label4"
           :readonly="readonly4"
           :disabled="disabled4"
@@ -142,13 +142,13 @@
         class="is-primary"
         style="width: 20%"
         :disabled="
-          !realMes ||
-            !realAcomulado ||
-            !estimadoMes ||
+          !pgRealMes ||
+            !pgRealAcomulado ||
+            !pgEstimadoMes ||
             !pcRealMes ||
             !pcRealAcomulado ||
             !pcEstimadoMes ||
-            !province
+            !provinceName
         "
         @click="sendInfo()"
       >
@@ -161,63 +161,68 @@
 <script>
 import moment from 'moment'
 import VuetifyMoney from '~/components/VuetifyMoney.vue'
+
+import insertaDataMutation from '~/apollo/mutations/insertData.graphql'
+import resetProvinceMutation from '~/apollo/mutations/resetProvince.graphql'
 export default {
   components: {
     VuetifyMoney
   },
   data: () => ({
     moment,
-    realMes: null,
+    status: '',
+    status2: '',
+    pgRealMes: null,
     label1: 'Real Mes',
     readonly1: false,
     disabled1: false,
     outlined1: true,
     clearable1: true,
     options1: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
-    realAcomulado: null,
+    pgRealAcomulado: null,
     label2: 'Real Acomulado',
     readonly2: false,
     disabled2: false,
     outlined2: true,
     clearable2: true,
     options2: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
-    estimadoMes: null,
+    pgEstimadoMes: null,
     label3: 'Estimado del Mes',
     readonly3: false,
     disabled3: false,
     outlined3: true,
     clearable3: true,
     options3: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
-    estimadoAnno: null,
+    pgEstimadoAnno: null,
     label4: 'Estimado cierre Año (opcional)',
     readonly4: false,
     disabled4: false,
     outlined4: true,
     clearable4: true,
     options4: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
     pcRealMes: null,
     label5: 'Real Mes',
@@ -226,11 +231,11 @@ export default {
     outlined5: true,
     clearable5: true,
     options5: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
     pcRealAcomulado: null,
     label6: 'Real Acomulado',
@@ -239,11 +244,11 @@ export default {
     outlined6: true,
     clearable6: true,
     options6: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
     pcEstimadoMes: null,
     label7: 'Estimado del Mes',
@@ -252,11 +257,11 @@ export default {
     outlined7: true,
     clearable7: true,
     options7: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     },
     pcEstimadoAnno: null,
     label8: 'Estimado cierre Año (opcional)',
@@ -265,29 +270,101 @@ export default {
     outlined8: true,
     clearable8: true,
     options8: {
-      locale: 'en-US',
+      locale: 'pt-BR',
       prefix: '$',
       suffix: '',
       length: 15,
-      precision: 2
+      precision: 1
     }
   }),
   computed: {
-    province() {
-      return this.$store.getters.get
+    provinceName() {
+      return this.$store.getters.getName
+    },
+    provinceDpa() {
+      return this.$store.getters.getDpa
     }
   },
   methods: {
     sendInfo() {
+      console.log(
+        moment()
+          .locale('es')
+          .format()
+      )
+      const getDate = moment()
+        .locale('es')
+        .format()
+      let month = moment()
+        .locale('es')
+        .format('MMMM')
+      month = month.charAt(0).toUpperCase() + month.slice(1)
+      const year = moment()
+        .locale('es')
+        .format('YYYY')
       this.$buefy.dialog.confirm({
-        title: 'Parte de la provincia ' + this.province,
+        title: 'Parte de la provincia ' + this.provinceName,
         message:
           'Una vez enviada la información no podrá ser cambiada, ¿ estás seguro de que es correcta ? ',
         confirmText: 'Si, estoy seguro',
+        cancelText: 'No, deseo revisar',
         type: 'is-danger',
         hasIcon: true,
-        onConfirm: () =>
-          this.$buefy.toast.open('Se envió la información del parte')
+        onConfirm: () => {
+          if (this.pcEstimadoAnno === null || this.pcEstimadoAnno === '') {
+            this.pcEstimadoAnno = 0
+          }
+          if (this.pgEstimadoAnno === null || this.pgEstimadoAnno === '') {
+            this.pgEstimadoAnno = 0
+          }
+          this.$apollo
+            .mutate({
+              mutation: insertaDataMutation,
+              variables: {
+                dpa: this.provinceDpa,
+                nombre: this.provinceName,
+                enviadoA: getDate,
+                enviadoEstaSemana: true,
+                mes: month,
+                anno: year,
+                pgRealMes: this.pgRealMes,
+                pgRealAcomulado: this.pgRealAcomulado,
+                pgEstimadoMes: this.pgEstimadoMes,
+                pgEstimadoCierreAnno: this.pgEstimadoAnno,
+                pcRealMes: this.pcRealMes,
+                pcRealAcomulado: this.pcRealAcomulado,
+                pcEstimadoMes: this.pcEstimadoMes,
+                pcEstimadoCierreAnno: this.pcEstimadoAnno
+              }
+            })
+            .then(({ data }) => {
+              this.status = data.insertData.status
+              if (this.status === 'ok') {
+                this.$apollo
+                  .mutate({
+                    mutation: resetProvinceMutation,
+                    variables: { dpa: this.provinceDpa }
+                  })
+                  .then(({ data }) => {
+                    this.status2 = data.resetProvince.status
+                    if (this.status2 === 'ok') {
+                      this.pgRealMes = null
+                      this.pgRealAcomulado = null
+                      this.pgEstimadoMes = null
+                      this.pgEstimadoAnno = null
+                      this.pcRealMes = null
+                      this.pcRealAcomulado = null
+                      this.pcEstimadoMes = null
+                      this.pcEstimadoAnno = null
+                      window.location.href = '/'
+                      this.$buefy.toast.open(
+                        'Se envió la información del parte'
+                      )
+                    }
+                  })
+              }
+            })
+        }
       })
     }
   }

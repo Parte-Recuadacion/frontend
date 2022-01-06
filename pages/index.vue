@@ -19,8 +19,31 @@
       >
         {{ provinceDpa + ' - ' + provinceName }}
       </p>
-      <p v-show="!provinceName" class="has-text-centered font-size-6">
+      <p
+        v-show="
+          !provinceName &&
+            parseInt(
+              moment()
+                .locale('es')
+                .format('D')
+            ) < 6
+        "
+        class="has-text-centered font-size-6"
+      >
         * Seleccione su provincia en la parte izquierda
+      </p>
+      <p
+        v-show="
+          !provinceName &&
+            parseInt(
+              moment()
+                .locale('es')
+                .format('D')
+            ) >= 6
+        "
+        class="has-text-centered font-size-6"
+      >
+        * Espere hasta el lunes para enviar la información del Parte
       </p>
     </div>
     <div>
@@ -164,6 +187,7 @@ import VuetifyMoney from '~/components/VuetifyMoney.vue'
 
 import insertaDataMutation from '~/apollo/mutations/insertData.graphql'
 import resetProvinceMutation from '~/apollo/mutations/resetProvince.graphql'
+import resetListMutation from '~/apollo/mutations/resetList.graphql'
 export default {
   components: {
     VuetifyMoney
@@ -275,7 +299,8 @@ export default {
       suffix: '',
       length: 15,
       precision: 1
-    }
+    },
+    status1: ''
   }),
   computed: {
     provinceName() {
@@ -283,6 +308,16 @@ export default {
     },
     provinceDpa() {
       return this.$store.getters.getDpa
+    }
+  },
+  beforeMount() {
+    const day = moment()
+      .locale('es')
+      .format('D')
+    if (parseInt(day) >= 6) {
+      this.$apollo.mutate({ mutation: resetListMutation }).then(({ data }) => {
+        this.status1 = data.resetList
+      })
     }
   },
   methods: {

@@ -12,7 +12,15 @@
 
     <section class="main-content columns">
       <aside
-        v-show="$route.name !== 'manegement'"
+        v-show="
+          $route.name !== 'manegement' &&
+            !loading &&
+            parseInt(
+              moment()
+                .locale('es')
+                .format('D')
+            ) < 6
+        "
         class="column is-3 section has-text-centered"
       >
         <b
@@ -65,11 +73,17 @@
 </template>
 
 <script>
+import moment from 'moment'
 import provinceMissingQuery from '~/apollo/queries/provinceMissing.graphql'
 
 export default {
   data() {
-    return { provinciasFaltantes: null, selectedProvince: [] }
+    return {
+      provinciasFaltantes: null,
+      selectedProvince: [],
+      loading: true,
+      moment
+    }
   },
   beforeMount() {
     this.$apollo.query({ query: provinceMissingQuery }).then(({ data }) => {

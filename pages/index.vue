@@ -1,27 +1,5 @@
 <template>
   <v-app id="inspire">
-    <div class="has-text-right">
-      <b-field>
-        <b-switch
-          v-model="isOn"
-          passive-type="is-dark"
-          type="is-white"
-          @input="changeBackgroud"
-        >
-          {{ isOn ? 'Modo Normal' : 'Modo Oscuro' }}
-        </b-switch>
-      </b-field>
-      <p class="is-hidden">
-        {{ isOn ? ($colorMode.value = 'dark') : ($colorMode.value = 'light') }}
-      </p>
-      <p class="is-hidden">
-        {{
-          isOn
-            ? ($colorMode.preference = 'dark')
-            : ($colorMode.preference = 'light')
-        }}
-      </p>
-    </div>
     <p class="has-text-right">
       {{
         moment()
@@ -37,14 +15,14 @@
       <p
         v-show="provinceName"
         class="has-text-centered font-size-7"
-        :style="isOn ? '' : 'color: #0855f5'"
+        style="color: #0855f5"
       >
         {{ provinceDpa + ' - ' + provinceName }}
       </p>
       <p
         v-show="
           !provinceName &&
-            parseInt(moment().weekday()) < 6 &&
+            parseInt(moment().weekday()) < 4 &&
             parseInt(moment().weekday()) !== 0
         "
         class="has-text-centered font-size-6"
@@ -54,7 +32,7 @@
       <p
         v-show="
           !provinceName &&
-            (parseInt(moment().weekday()) >= 6 ||
+            (parseInt(moment().weekday()) >= 4 ||
               parseInt(moment().weekday()) === 0)
         "
         class="has-text-centered font-size-6"
@@ -65,36 +43,25 @@
     <div>
       <p class="has-text-centered">
         * La información del parte debe enviarse en
-        <span
-          :style="
-            isOn ? 'font-weight: bold' : 'color: #0855f5; font-weight: bold'
-          "
+        <span style="color: #0855f5; font-weight: bold"
           >miles de pesos a un lugar después de la coma</span
         >
         todos los
-        <span
-          :style="
-            isOn ? 'font-weight: bold' : 'color: #0855f5; font-weight: bold'
-          "
-          >lunes</span
-        >
+        <span style="color: #0855f5; font-weight: bold">lunes</span>
         (o martes en casos excepcionales) antes las
-        <span
-          :style="
-            isOn ? 'font-weight: bold' : 'color: #0855f5; font-weight: bold'
-          "
-          >4:00pm</span
-        >.
+        <span style="color: #0855f5; font-weight: bold">4:00pm</span>.
       </p>
       <br />
-      <p class="has-text-centered" style="margin-top: -30px">
+      <p
+        v-show="
+          parseInt(moment().weekday()) < 4 && parseInt(moment().weekday()) !== 0
+        "
+        class="has-text-centered"
+        style="margin-top: -30px"
+      >
         * Complete los presupuestos debajo y una vez que haya chequeado que todo
         esté correcto, hacer click en el botón
-        <span
-          :style="
-            isOn ? 'font-weight: bold' : 'color: #0855f5; font-weight: bold'
-          "
-          >Enviar información</span
+        <span style="color: #0855f5; font-weight: bold">Enviar información</span
         >.
       </p>
     </div>
@@ -105,9 +72,7 @@
       >
         <p
           class="has-text-centered font-size-5 margin-bottom-10"
-          :style="
-            isOn ? 'font-weight: bold' : 'color: #0855f5; font-weight: bold'
-          "
+          style="color: #0855f5; font-weight: bold"
         >
           Presupuesto Global
         </p>
@@ -155,9 +120,7 @@
       >
         <p
           class="has-text-centered font-size-5 margin-bottom-10"
-          :style="
-            isOn ? 'font-weight: bold' : 'color: #0855f5; font-weight: bold'
-          "
+          style="color: #0855f5; font-weight: bold"
         >
           Presupuesto Central
         </p>
@@ -201,7 +164,7 @@
     </div>
     <div class="has-text-centered margin-top-30">
       <b-button
-        :class="isOn ? 'is-white' : 'is-primary'"
+        class="is-primary"
         style="width: 20%"
         :loading="loading"
         :disabled="
@@ -353,14 +316,11 @@ export default {
     },
     provinceDpa() {
       return this.$store.getters.getDpa
-    },
-    isOn() {
-      return this.$store.getters.getValue
     }
   },
   beforeMount() {
     const day = moment().weekday()
-    if (parseInt(day) >= 6) {
+    if (parseInt(day) >= 4) {
       this.$apollo.mutate({ mutation: resetListMutation }).then(({ data }) => {
         this.status1 = data.resetList
       })
@@ -448,52 +408,8 @@ export default {
             })
         }
       })
-    },
-    changeBackgroud() {
-      if (this.$colorMode.value === 'light') {
-        this.$colorMode.value = 'dark'
-        this.$store.commit('updateColor', 'dark')
-      } else {
-        this.$colorMode.value = 'light'
-        this.$store.commit('updateColor', 'light')
-      }
-      if (this.isOn) {
-        console.log(this.isOn)
-        this.$store.commit('updateValue', false)
-        console.log(this.isOn)
-      } else {
-        this.$store.commit('updateValue', true)
-      }
     }
   }
 }
 </script>
-<style>
-body {
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.8);
-}
-.dark-mode body div {
-  background-color: #050e15;
-  color: whitesmoke;
-}
-.sepia-mode body {
-  background-color: #f1e7d0;
-  color: #433422;
-}
-.v-text-field__slot {
-  color: blue !important;
-  background-color: white !important;
-  height: 50px !important;
-  margin-top: 2px !important;
-}
-.v-text-field__prefix {
-  color: blue !important;
-  background-color: white !important;
-}
-.theme--light.v-icon,
-.v-application--is-ltr .v-text-field .v-input__append-inner,
-.v-application--is-rtl .v-text-field .v-input__prepend-inne {
-  background-color: white;
-}
-</style>
+<style></style>

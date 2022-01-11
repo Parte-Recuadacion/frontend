@@ -1,17 +1,6 @@
 <template>
   <v-app id="inspire">
     <div class="margin-bottom-50 is-fullheight">
-      <p class="is-hidden">
-        {{ isOn ? ($colorMode.value = 'dark') : ($colorMode.value = 'light') }}
-      </p>
-      <p class="is-hidden">
-        {{
-          isOn
-            ? ($colorMode.preference = 'dark')
-            : ($colorMode.preference = 'light')
-        }}
-      </p>
-
       <div class="margin-top-30">
         <div class="has-text-centered">
           <nuxt-link class="font-size-3" to="/">
@@ -70,7 +59,7 @@
       </div>
       <div v-show="month && provincia && year">
         <div class="has-text-centered margin-top-20">
-          <p class="font-size-7" :style="isOn ? '' : 'color: #0855f5'">
+          <p class="font-size-7" style="color: #0855f5">
             {{ provincia }}
           </p>
           <p class="font-size-2">{{ '(' + month + ')' }}</p>
@@ -83,7 +72,7 @@
             >
               <p
                 class="has-text-centered font-size-5 margin-bottom-20"
-                :style="isOn ? '' : 'color: #0855f5'"
+                style="color: #0855f5"
               >
                 Presupuesto Global
               </p>
@@ -148,7 +137,7 @@
             >
               <p
                 class="has-text-centered font-size-5 margin-bottom-20"
-                :style="isOn ? '' : 'color: #0855f5'"
+                style="color: #0855f5"
               >
                 Presupuesto Central
               </p>
@@ -287,11 +276,6 @@ export default {
       // showDetailIcon: true
     }
   },
-  computed: {
-    isOn() {
-      return this.$store.getters.getValue
-    }
-  },
   methods: {
     updateSelection() {
       if (
@@ -338,17 +322,4 @@ export default {
   }
 }
 </script>
-<style>
-body {
-  background-color: #fff;
-  color: rgba(0, 0, 0, 0.8);
-}
-.dark-mode body div {
-  background-color: #091a28;
-  color: antiquewhite;
-}
-.sepia-mode body {
-  background-color: #f1e7d0;
-  color: #433422;
-}
-</style>
+<style></style>

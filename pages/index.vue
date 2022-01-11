@@ -20,27 +20,13 @@
         {{ provinceDpa + ' - ' + provinceName }}
       </p>
       <p
-        v-show="
-          !provinceName &&
-            parseInt(
-              moment()
-                .locale('es')
-                .format('D')
-            ) < 6
-        "
+        v-show="!provinceName && parseInt(moment().weekday()) < 6"
         class="has-text-centered font-size-6"
       >
         * Seleccione su provincia en la parte izquierda
       </p>
       <p
-        v-show="
-          !provinceName &&
-            parseInt(
-              moment()
-                .locale('es')
-                .format('D')
-            ) >= 6
-        "
+        v-show="!provinceName && parseInt(moment().weekday()) >= 6"
         class="has-text-centered font-size-6"
       >
         * Espere hasta el lunes para enviar la información del Parte

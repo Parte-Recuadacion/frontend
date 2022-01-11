@@ -15,11 +15,7 @@
         v-show="
           $route.name !== 'manegement' &&
             !loading &&
-            parseInt(
-              moment()
-                .locale('es')
-                .format('D')
-            ) < 6
+            parseInt(moment().weekday()) < 6
         "
         class="column is-3 section has-text-centered"
       >
@@ -89,6 +85,7 @@ export default {
     this.$apollo.query({ query: provinceMissingQuery }).then(({ data }) => {
       this.provinciasFaltantes = data.provinceMissing
       this.loading = false
+      console.log(moment().weekday())
     })
   },
   methods: {

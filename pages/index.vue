@@ -170,6 +170,7 @@
 <script>
 import moment from 'moment'
 import VuetifyMoney from '~/components/VuetifyMoney.vue'
+import provinceMissingQuery from '~/apollo/queries/provinceMissing.graphql'
 
 import insertaDataMutation from '~/apollo/mutations/insertData.graphql'
 import resetProvinceMutation from '~/apollo/mutations/resetProvince.graphql'
@@ -180,6 +181,7 @@ export default {
   },
   data: () => ({
     moment,
+    provinciasFaltantes: [],
     status: '',
     status2: '',
     pgRealMes: null,
@@ -286,7 +288,8 @@ export default {
       length: 15,
       precision: 1
     },
-    status1: ''
+    status1: '',
+    arr1: null
   }),
   computed: {
     provinceName() {
@@ -297,22 +300,19 @@ export default {
     }
   },
   beforeMount() {
-    const day = moment()
-      .locale('es')
-      .format('D')
+    const day = moment().weekday()
     if (parseInt(day) >= 6) {
       this.$apollo.mutate({ mutation: resetListMutation }).then(({ data }) => {
         this.status1 = data.resetList
       })
     }
+    this.$apollo.query({ query: provinceMissingQuery }).then(({ data }) => {
+      this.provinciasFaltantes = data.provinceMissing
+      this.loading = false
+    })
   },
   methods: {
     sendInfo() {
-      console.log(
-        moment()
-          .locale('es')
-          .format()
-      )
       const getDate = moment()
         .locale('es')
         .format()
@@ -377,7 +377,11 @@ export default {
                       this.pcRealAcomulado = null
                       this.pcEstimadoMes = null
                       this.pcEstimadoAnno = null
-                      window.location.href = '/'
+                      const index = this.$store.getters.getIndex
+                      this.$store.commit('deleteProvince', index)
+                      this.$store.commit('updateDpa', null)
+                      this.$store.commit('updateNombre', null)
+                      this.$store.commit('updateChosenProvince', -1)
                       this.$buefy.toast.open(
                         'Se envió la información del parte'
                       )

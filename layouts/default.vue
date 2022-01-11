@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!--nav
-      class="navbar header has-shadow is-primary"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <div class="navbar-brand">
-        <a class="navbar-item" href="/"> </a>
-      </div>
-    </nav-->
-
     <section class="main-content columns">
       <aside
         v-show="
@@ -34,7 +24,7 @@
           style="border: solid #ced2e1 1pt; padding-top: 10px; padding-bottom: 10px"
         >
           <div
-            v-for="(province, index) in provinciasFaltantes"
+            v-for="(province, index) in provincias"
             :key="index"
             class="margin-bottom-5"
             style="width: 75%; margin-left: 50px"
@@ -76,24 +66,31 @@ export default {
   data() {
     return {
       provinciasFaltantes: null,
-      selectedProvince: [],
       loading: true,
       moment
+    }
+  },
+  computed: {
+    provincias() {
+      return this.$store.getters.getProvince
+    },
+    selectedProvince() {
+      return this.$store.getters.getChosenProvince
     }
   },
   beforeMount() {
     this.$apollo.query({ query: provinceMissingQuery }).then(({ data }) => {
       this.provinciasFaltantes = data.provinceMissing
       this.loading = false
-      console.log(moment().weekday())
+      this.$store.commit('updateMissingProvince', this.provinciasFaltantes)
     })
   },
   methods: {
     chosenProvince(index) {
-      this.selectedProvince = []
-      this.selectedProvince.push(Number(index))
+      this.$store.commit('updateChosenProvince', index)
       this.$store.commit('updateDpa', this.provinciasFaltantes[index].dpa)
       this.$store.commit('updateNombre', this.provinciasFaltantes[index].nombre)
+      this.$store.commit('updateIndex', index)
     }
   }
 }

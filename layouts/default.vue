@@ -5,7 +5,8 @@
         v-show="
           $route.name !== 'manegement' &&
             !loading &&
-            parseInt(moment().weekday()) < 6
+            parseInt(moment().weekday()) < 6 &&
+            parseInt(moment().weekday()) !== 0
         "
         class="column is-3 section has-text-centered"
       >
@@ -59,7 +60,10 @@
 </template>
 
 <script>
+// Components && Vue library
 import moment from 'moment'
+
+// Apollo
 import provinceMissingQuery from '~/apollo/queries/provinceMissing.graphql'
 
 export default {

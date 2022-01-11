@@ -20,13 +20,21 @@
         {{ provinceDpa + ' - ' + provinceName }}
       </p>
       <p
-        v-show="!provinceName && parseInt(moment().weekday()) < 6"
+        v-show="
+          !provinceName &&
+            parseInt(moment().weekday()) < 6 &&
+            parseInt(moment().weekday()) !== 0
+        "
         class="has-text-centered font-size-6"
       >
         * Seleccione su provincia en la parte izquierda
       </p>
       <p
-        v-show="!provinceName && parseInt(moment().weekday()) >= 6"
+        v-show="
+          !provinceName &&
+            (parseInt(moment().weekday()) >= 6 ||
+              parseInt(moment().weekday()) === 0)
+        "
         class="has-text-centered font-size-6"
       >
         * Espere hasta el lunes para enviar la información del Parte
@@ -150,6 +158,7 @@
       <b-button
         class="is-primary"
         style="width: 20%"
+        :loading="loading"
         :disabled="
           !pgRealMes ||
             !pgRealAcomulado ||
@@ -168,20 +177,21 @@
 </template>
 
 <script>
+// Components && Vue
 import moment from 'moment'
 import VuetifyMoney from '~/components/VuetifyMoney.vue'
-import provinceMissingQuery from '~/apollo/queries/provinceMissing.graphql'
 
+// Apollo
 import insertaDataMutation from '~/apollo/mutations/insertData.graphql'
 import resetProvinceMutation from '~/apollo/mutations/resetProvince.graphql'
 import resetListMutation from '~/apollo/mutations/resetList.graphql'
+
 export default {
   components: {
     VuetifyMoney
   },
   data: () => ({
     moment,
-    provinciasFaltantes: [],
     status: '',
     status2: '',
     pgRealMes: null,
@@ -289,7 +299,7 @@ export default {
       precision: 1
     },
     status1: '',
-    arr1: null
+    loading: false
   }),
   computed: {
     provinceName() {
@@ -306,10 +316,6 @@ export default {
         this.status1 = data.resetList
       })
     }
-    this.$apollo.query({ query: provinceMissingQuery }).then(({ data }) => {
-      this.provinciasFaltantes = data.provinceMissing
-      this.loading = false
-    })
   },
   methods: {
     sendInfo() {
@@ -332,6 +338,7 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         onConfirm: () => {
+          this.loading = true
           if (this.pcEstimadoAnno === null || this.pcEstimadoAnno === '') {
             this.pcEstimadoAnno = 0
           }
@@ -382,6 +389,7 @@ export default {
                       this.$store.commit('updateDpa', null)
                       this.$store.commit('updateNombre', null)
                       this.$store.commit('updateChosenProvince', -1)
+                      this.loading = false
                       this.$buefy.toast.open(
                         'Se envió la información del parte'
                       )

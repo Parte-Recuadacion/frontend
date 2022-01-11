@@ -194,7 +194,7 @@ export default {
   },
   toast: {
     position: 'bottom-left',
-    duration: 5000
+    duration: 10000
   },
   /*
    ** Axios module configuration

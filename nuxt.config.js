@@ -55,12 +55,13 @@ export default {
     'nuxt-responsive-loader',
     'nuxt-clipboard2',
     'nuxt-compress',
+    '@nuxtjs/color-mode',
     '@nuxtjs/apollo',
     '@nuxtjs/toast',
     '@nuxtjs/pwa',
-    '@nuxtjs/manifest',
     // Font awesome
     // Simple usage
+    '@nuxtjs/manifest',
     '@nuxtjs/vuetify',
 
     // With options
@@ -200,7 +201,16 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '-mode',
+    storageKey: 'nuxt-color-mode'
+  },
   axios: {
     baseURL: environ.BASE_URL
   },

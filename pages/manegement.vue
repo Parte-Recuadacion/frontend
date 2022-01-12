@@ -1,145 +1,185 @@
 <template>
-  <div class="margin-bottom-50">
-    <div class="margin-top-30">
-      <div class="has-text-centered">
-        <nuxt-link class="font-size-3" to="/">
-          Volver a la página principal
-        </nuxt-link>
-      </div>
-      <br />
-      <p class="has-text-centered font-size-5">
-        Seleccione la provincia el mes y el año para ver su Parte de Recaudación
+  <v-app id="inspire">
+    <div class="margin-bottom-50 is-fullheight">
+      <p class="is-hidden">
+        {{ isOn ? ($colorMode.value = 'dark') : ($colorMode.value = 'light') }}
       </p>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-2 margin-top-20">
-        <b-field>
-          <b-autocomplete
-            v-model="provincia"
-            open-on-focus
-            readonly
-            :data="provincias"
-            placeholder="provincia"
-            field="name"
-            @input="updateSelection"
-          >
-          </b-autocomplete>
-        </b-field>
-      </div>
-      <div class="column is-2 margin-top-20">
-        <b-field>
-          <b-autocomplete
-            v-model="month"
-            open-on-focus
-            readonly
-            :data="months"
-            placeholder="mes"
-            field="name"
-            @input="updateSelection"
-          >
-          </b-autocomplete>
-        </b-field>
-      </div>
-      <div class="column is-2 margin-top-20">
-        <b-field>
-          <b-autocomplete
-            v-model="year"
-            open-on-focus
-            readonly
-            :data="years"
-            placeholder="año"
-            field="name"
-            @input="updateSelection"
-          >
-          </b-autocomplete>
-        </b-field>
-      </div>
-    </div>
-    <div v-show="month && provincia && year">
-      <div class="has-text-centered margin-top-20">
-        <p class="font-size-7" style="color: #0855f5">{{ provincia }}</p>
-        <p class="font-size-2">{{ '(' + month + ')' }}</p>
-      </div>
-      <div class="margin-top-30">
-        <div class="columns is-centered">
-          <div
-            class="column is-6"
-            style="margin-top: 12px; border: solid 1pt #ced2e1"
-          >
-            <p
-              class="has-text-centered font-size-5 margin-bottom-20"
-              style="color: #0855f5"
-            >
-              Presupuesto Global
-            </p>
-            <b-table
-              v-if="provinceData"
-              ref="table"
-              :data="provinceData"
-              hoverable
-            >
-              <b-table-column v-slot="props" label="Fecha que se envió">
-                {{
-                  moment(props.row.enviadoA)
-                    .locale('es')
-                    .format('dddd, MMMM Do')
-                }}
-              </b-table-column>
-              <b-table-column v-slot="props" label="Real Mes">
-                {{ props.row.presupuestoGlobal.pgRealMes }}
-              </b-table-column>
+      <p class="is-hidden">
+        {{
+          isOn
+            ? ($colorMode.preference = 'dark')
+            : ($colorMode.preference = 'light')
+        }}
+      </p>
 
-              <b-table-column v-slot="props" label="Real Acomulado">
-                {{ props.row.presupuestoGlobal.pgRealAcomulado }}
-              </b-table-column>
-              <b-table-column v-slot="props" label="Estimado del Mes">
-                {{ props.row.presupuestoGlobal.pgEstimadoMes }}
-              </b-table-column>
-              <b-table-column v-slot="props" label="Estimado Cierre Año">
-                {{ props.row.presupuestoGlobal.pgEstimadoCierreAnno }}
-              </b-table-column>
-            </b-table>
-            <b>Total Real del Mes:</b> {{ totalpgRealMes }}
-            <br />
-            <b>Total Real Acomulado:</b> {{ totalpgRealAcomulado }}
-          </div>
-          <div
-            class="column is-5 margin-left-10"
-            style="margin-top: 12px; border: solid 1pt #ced2e1"
-          >
-            <p
-              class="has-text-centered font-size-5 margin-bottom-20"
-              style="color: #0855f5"
+      <div class="margin-top-30">
+        <div class="has-text-centered">
+          <nuxt-link class="font-size-3" to="/">
+            Volver a la página principal
+          </nuxt-link>
+        </div>
+        <br />
+        <p class="has-text-centered font-size-5">
+          Seleccione la provincia el mes y el año para ver su Parte de
+          Recaudación
+        </p>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-2 margin-top-20">
+          <b-field>
+            <b-autocomplete
+              v-model="provincia"
+              open-on-focus
+              readonly
+              :data="provincias"
+              placeholder="provincia"
+              field="name"
+              @input="updateSelection"
             >
-              Presupuesto Central
-            </p>
-            <b-table
-              v-if="provinceData"
-              ref="table"
-              :data="provinceData"
-              hoverable
+            </b-autocomplete>
+          </b-field>
+        </div>
+        <div class="column is-2 margin-top-20">
+          <b-field>
+            <b-autocomplete
+              v-model="month"
+              open-on-focus
+              readonly
+              :data="months"
+              placeholder="mes"
+              field="name"
+              @input="updateSelection"
             >
-              <b-table-column v-slot="props" label="Real Mes">
-                {{ props.row.presupuestoCentral.pcRealMes }}
-              </b-table-column>
-              <b-table-column v-slot="props" label="Real Acomulado">
-                {{ props.row.presupuestoCentral.pcRealAcomulado }}
-              </b-table-column>
-              <b-table-column v-slot="props" label="Estimado del Mes">
-                {{ props.row.presupuestoCentral.pcEstimadoMes }}
-              </b-table-column>
-              <b-table-column v-slot="props" label="Estimado Cierre Año">
-                {{ props.row.presupuestoCentral.pcEstimadoCierreAnno }}
-              </b-table-column>
-            </b-table>
-            <b>Total Real del Mes:</b> {{ totalpcRealMes }}
-            <br />
-            <b>Total Real Acomulado:</b> {{ totalpcRealAcomulado }}
+            </b-autocomplete>
+          </b-field>
+        </div>
+        <div class="column is-2 margin-top-20">
+          <b-field>
+            <b-autocomplete
+              v-model="year"
+              open-on-focus
+              readonly
+              :data="years"
+              placeholder="año"
+              field="name"
+              @input="updateSelection"
+            >
+            </b-autocomplete>
+          </b-field>
+        </div>
+      </div>
+      <div v-show="month && provincia && year">
+        <div class="has-text-centered margin-top-20">
+          <p class="font-size-7" :style="isOn ? '' : 'color: #0855f5'">
+            {{ provincia }}
+          </p>
+          <p class="font-size-2">{{ '(' + month + ')' }}</p>
+        </div>
+        <div class="margin-top-30">
+          <div class="columns is-centered">
+            <div
+              class="column is-6"
+              style="margin-top: 12px; border: solid 1pt #ced2e1"
+            >
+              <p
+                class="has-text-centered font-size-5 margin-bottom-20"
+                :style="isOn ? '' : 'color: #0855f5'"
+              >
+                Presupuesto Global
+              </p>
+              <b-table
+                v-if="provinceData"
+                ref="table"
+                :data="provinceData"
+                hoverable
+              >
+                <b-table-column v-slot="props" label="Fecha que se envió">
+                  {{
+                    moment(props.row.enviadoA)
+                      .locale('es')
+                      .format('dddd, MMMM Do')
+                  }}
+                </b-table-column>
+                <b-table-column v-slot="props" label="Real Mes">
+                  {{
+                    props.row.presupuestoGlobal.pgRealMes.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
+                </b-table-column>
+
+                <b-table-column v-slot="props" label="Real Acomulado">
+                  {{
+                    props.row.presupuestoGlobal.pgRealAcomulado.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
+                </b-table-column>
+                <b-table-column v-slot="props" label="Estimado del Mes">
+                  {{
+                    props.row.presupuestoGlobal.pgEstimadoMes.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
+                </b-table-column>
+                <b-table-column v-slot="props" label="Estimado Cierre Año">
+                  {{
+                    props.row.presupuestoGlobal.pgEstimadoCierreAnno.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
+                </b-table-column>
+              </b-table>
+              <b>Total Real del Mes:</b>
+              {{ String(totalpgRealMes).replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
+              <br />
+              <b>Total Real Acomulado:</b>
+              {{
+                String(totalpgRealAcomulado).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+              }}
+            </div>
+            <div
+              class="column is-5 margin-left-10"
+              style="margin-top: 12px; border: solid 1pt #ced2e1"
+            >
+              <p
+                class="has-text-centered font-size-5 margin-bottom-20"
+                :style="isOn ? '' : 'color: #0855f5'"
+              >
+                Presupuesto Central
+              </p>
+              <b-table
+                v-if="provinceData"
+                ref="table"
+                :data="provinceData"
+                hoverable
+              >
+                <b-table-column v-slot="props" label="Real Mes">
+                  {{ props.row.presupuestoCentral.pcRealMes }}
+                </b-table-column>
+                <b-table-column v-slot="props" label="Real Acomulado">
+                  {{ props.row.presupuestoCentral.pcRealAcomulado }}
+                </b-table-column>
+                <b-table-column v-slot="props" label="Estimado del Mes">
+                  {{ props.row.presupuestoCentral.pcEstimadoMes }}
+                </b-table-column>
+                <b-table-column v-slot="props" label="Estimado Cierre Año">
+                  {{ props.row.presupuestoCentral.pcEstimadoCierreAnno }}
+                </b-table-column>
+              </b-table>
+              <b>Total Real del Mes:</b> {{ totalpcRealMes }}
+              <br />
+              <b>Total Real Acomulado:</b> {{ totalpcRealAcomulado }}
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -223,6 +263,11 @@ export default {
       // showDetailIcon: true
     }
   },
+  computed: {
+    isOn() {
+      return this.$store.getters.getValue
+    }
+  },
   methods: {
     updateSelection() {
       if (
@@ -269,3 +314,17 @@ export default {
   }
 }
 </script>
+<style>
+body {
+  background-color: #fff;
+  color: rgba(0, 0, 0, 0.8);
+}
+.dark-mode body div {
+  background-color: #091a28;
+  color: antiquewhite;
+}
+.sepia-mode body {
+  background-color: #f1e7d0;
+  color: #433422;
+}
+</style>

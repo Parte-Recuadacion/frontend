@@ -3,7 +3,9 @@ export const state = () => ({
   nombre: null,
   index: null,
   missingProvince: [],
-  selectedProvince: []
+  selectedProvince: [],
+  color: 'light',
+  value: false
 })
 
 export const mutations = {
@@ -25,6 +27,12 @@ export const mutations = {
   updateChosenProvince(state, index) {
     state.selectedProvince = []
     state.selectedProvince.push(Number(index))
+  },
+  updateColor(state, color) {
+    state.color = color
+  },
+  updateValue(state, value) {
+    state.value = value
   }
 }
 export const getters = {
@@ -42,5 +50,11 @@ export const getters = {
   },
   getChosenProvince: state => {
     return state.selectedProvince
+  },
+  getColor: state => {
+    return state.color
+  },
+  getValue: state => {
+    return state.value
   }
 }

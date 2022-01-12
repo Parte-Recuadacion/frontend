@@ -159,21 +159,45 @@
                 hoverable
               >
                 <b-table-column v-slot="props" label="Real Mes">
-                  {{ props.row.presupuestoCentral.pcRealMes }}
+                  {{
+                    props.row.presupuestoCentral.pcRealMes.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
                 </b-table-column>
                 <b-table-column v-slot="props" label="Real Acomulado">
-                  {{ props.row.presupuestoCentral.pcRealAcomulado }}
+                  {{
+                    props.row.presupuestoCentral.pcRealAcomulado.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
                 </b-table-column>
                 <b-table-column v-slot="props" label="Estimado del Mes">
-                  {{ props.row.presupuestoCentral.pcEstimadoMes }}
+                  {{
+                    props.row.presupuestoCentral.pcEstimadoMes.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
                 </b-table-column>
                 <b-table-column v-slot="props" label="Estimado Cierre Año">
-                  {{ props.row.presupuestoCentral.pcEstimadoCierreAnno }}
+                  {{
+                    props.row.presupuestoCentral.pcEstimadoCierreAnno.replace(
+                      /\d(?=(\d{3})+\.)/g,
+                      '$&,'
+                    )
+                  }}
                 </b-table-column>
               </b-table>
-              <b>Total Real del Mes:</b> {{ totalpcRealMes }}
+              <b>Total Real del Mes:</b>
+              {{ String(totalpcRealMes).replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
               <br />
-              <b>Total Real Acomulado:</b> {{ totalpcRealAcomulado }}
+              <b>Total Real Acomulado:</b>
+              {{
+                String(totalpcRealAcomulado).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+              }}
             </div>
           </div>
         </div>

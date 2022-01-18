@@ -87,6 +87,7 @@ export default {
       this.provinciasFaltantes = data.provinceMissing
       this.loading = false
       this.$store.commit('updateMissingProvince', this.provinciasFaltantes)
+      this.$store.commit('setUpdated', true)
     })
   },
   methods: {

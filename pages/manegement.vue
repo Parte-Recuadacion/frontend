@@ -273,7 +273,6 @@ export default {
         pcEstimadoMes: { title: 'Estimado Mes', display: true },
         pcEstimadoCierreAnno: { title: 'Estimado Año', display: true }
       }
-      // showDetailIcon: true
     }
   },
   methods: {
@@ -302,20 +301,20 @@ export default {
               this.totalpgRealMes += parseFloat(
                 this.provinceData[i].presupuestoGlobal.pgRealMes
               )
-              this.totalpgRealAcomulado += parseFloat(
-                this.provinceData[i].presupuestoGlobal.pgRealAcomulado
-              )
               this.totalpcRealMes += parseFloat(
                 this.provinceData[i].presupuestoCentral.pcRealMes
               )
-              this.totalpcRealAcomulado += parseFloat(
-                this.provinceData[i].presupuestoCentral.pcRealAcomulado
-              )
             }
+            this.totalpgRealAcomulado = parseFloat(
+              this.provinceData[this.provinceData.length - 1].presupuestoGlobal
+                .pgRealAcomulado
+            ).toFixed(1)
+            this.totalpcRealAcomulado = parseFloat(
+              this.provinceData[this.provinceData.length - 1].presupuestoCentral
+                .pcRealAcomulado
+            ).toFixed(1)
             this.totalpgRealMes = this.totalpgRealMes.toFixed(1)
-            this.totalpgRealAcomulado = this.totalpgRealAcomulado.toFixed(1)
             this.totalpcRealMes = this.totalpcRealMes.toFixed(1)
-            this.totalpcRealAcomulado = this.totalpcRealAcomulado.toFixed(1)
           })
       }
     }

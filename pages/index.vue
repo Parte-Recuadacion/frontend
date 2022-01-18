@@ -316,6 +316,12 @@ export default {
     },
     provinceDpa() {
       return this.$store.getters.getDpa
+    },
+    provincias() {
+      return this.$store.getters.getProvince
+    },
+    updated() {
+      return this.$store.getters.getUpdated
     }
   },
   beforeMount() {
@@ -323,7 +329,20 @@ export default {
     if (parseInt(day) >= 4) {
       this.$apollo.mutate({ mutation: resetListMutation }).then(({ data }) => {
         this.status1 = data.resetList
+        console.log('aaaaa')
       })
+    }
+  },
+  mounted() {
+    if (this.updated) {
+      if (this.provincias.length === 0) {
+        this.$apollo
+          .mutate({ mutation: resetListMutation })
+          .then(({ data }) => {
+            this.status1 = data.resetList
+            this.$store.commit('setUpdated', false)
+          })
+      }
     }
   },
   methods: {

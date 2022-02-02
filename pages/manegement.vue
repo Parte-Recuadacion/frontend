@@ -23,6 +23,7 @@
               :data="provincias"
               placeholder="provincia"
               field="name"
+              dropdown-position="bottom"
               @input="updateSelection"
             >
             </b-autocomplete>
@@ -37,6 +38,7 @@
               :data="months"
               placeholder="mes"
               field="name"
+              dropdown-position="bottom"
               @input="updateSelection"
             >
             </b-autocomplete>
@@ -51,6 +53,7 @@
               :data="years"
               placeholder="año"
               field="name"
+              dropdown-position="bottom"
               @input="updateSelection"
             >
             </b-autocomplete>

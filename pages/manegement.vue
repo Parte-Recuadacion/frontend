@@ -91,7 +91,7 @@
                 </b-table-column>
                 <b-table-column v-slot="props" label="Real Mes">
                   {{
-                    props.row.presupuestoGlobal.pgRealMes.replace(
+                    String(props.row.presupuestoGlobal.pgRealMes).replace(
                       /\d(?=(\d{3})+\.)/g,
                       '$&,'
                     )
@@ -100,7 +100,7 @@
 
                 <b-table-column v-slot="props" label="Real Acomulado">
                   {{
-                    props.row.presupuestoGlobal.pgRealAcomulado.replace(
+                    String(props.row.presupuestoGlobal.pgRealAcomulado).replace(
                       /\d(?=(\d{3})+\.)/g,
                       '$&,'
                     )
@@ -108,7 +108,7 @@
                 </b-table-column>
                 <b-table-column v-slot="props" label="Estimado del Mes">
                   {{
-                    props.row.presupuestoGlobal.pgEstimadoMes.replace(
+                    String(props.row.presupuestoGlobal.pgEstimadoMes).replace(
                       /\d(?=(\d{3})+\.)/g,
                       '$&,'
                     )
@@ -116,10 +116,9 @@
                 </b-table-column>
                 <b-table-column v-slot="props" label="Estimado Cierre Año">
                   {{
-                    props.row.presupuestoGlobal.pgEstimadoCierreAnno.replace(
-                      /\d(?=(\d{3})+\.)/g,
-                      '$&,'
-                    )
+                    String(
+                      props.row.presupuestoGlobal.pgEstimadoCierreAnno
+                    ).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                   }}
                 </b-table-column>
               </b-table>
@@ -149,7 +148,7 @@
               >
                 <b-table-column v-slot="props" label="Real Mes">
                   {{
-                    props.row.presupuestoCentral.pcRealMes.replace(
+                    String(props.row.presupuestoCentral.pcRealMes).replace(
                       /\d(?=(\d{3})+\.)/g,
                       '$&,'
                     )
@@ -157,15 +156,14 @@
                 </b-table-column>
                 <b-table-column v-slot="props" label="Real Acomulado">
                   {{
-                    props.row.presupuestoCentral.pcRealAcomulado.replace(
-                      /\d(?=(\d{3})+\.)/g,
-                      '$&,'
-                    )
+                    String(
+                      props.row.presupuestoCentral.pcRealAcomulado
+                    ).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                   }}
                 </b-table-column>
                 <b-table-column v-slot="props" label="Estimado del Mes">
                   {{
-                    props.row.presupuestoCentral.pcEstimadoMes.replace(
+                    String(props.row.presupuestoCentral.pcEstimadoMes).replace(
                       /\d(?=(\d{3})+\.)/g,
                       '$&,'
                     )
@@ -173,10 +171,9 @@
                 </b-table-column>
                 <b-table-column v-slot="props" label="Estimado Cierre Año">
                   {{
-                    props.row.presupuestoCentral.pcEstimadoCierreAnno.replace(
-                      /\d(?=(\d{3})+\.)/g,
-                      '$&,'
-                    )
+                    String(
+                      props.row.presupuestoCentral.pcEstimadoCierreAnno
+                    ).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                   }}
                 </b-table-column>
               </b-table>

@@ -67,7 +67,19 @@
           </p>
           <p class="font-size-2">{{ '(' + month + ')' }}</p>
         </div>
-        <div class="margin-top-30">
+        <p
+          v-if="provinceData.length === 0"
+          class="has-text-centered margin-top-20 font-size-4"
+        >
+          <font-awesome-icon
+            :icon="['fas', 'exclamation']"
+            class="font-size-4 is-white"
+            color="#0855f5"
+            style="margin-right: 10px"
+          />
+          No tenemos registro de este parte
+        </p>
+        <div v-if="provinceData.length > 0" class="margin-top-30">
           <div class="columns is-centered">
             <div
               class="column is-6"
@@ -201,6 +213,7 @@ import provinceDataMutation from '~/apollo/mutations/provinceData.graphql'
 export default {
   data() {
     return {
+      loading: false,
       moment,
       months: [
         { name: 'Enero', value: 0 },
@@ -261,7 +274,7 @@ export default {
       totalpcRealAcomulado: 0,
       year: null,
       provincia: null,
-      provinceData: null,
+      provinceData: [],
       columnsVisible: {
         nombre: { title: 'Name', display: true },
         pgRealMes: { title: 'Real Mes', display: true },
@@ -282,6 +295,7 @@ export default {
         this.month !== null &&
         this.year !== null
       ) {
+        this.loading = true
         this.$apollo
           .mutate({
             mutation: provinceDataMutation,
@@ -315,6 +329,7 @@ export default {
             ).toFixed(1)
             this.totalpgRealMes = this.totalpgRealMes.toFixed(1)
             this.totalpcRealMes = this.totalpcRealMes.toFixed(1)
+            this.loading = false
           })
       }
     }

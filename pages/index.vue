@@ -22,7 +22,7 @@
       <p
         v-show="
           !provinceName &&
-            parseInt(moment().weekday()) < 4 &&
+            parseInt(moment().weekday()) < 3 &&
             parseInt(moment().weekday()) !== 0
         "
         class="has-text-centered font-size-6"
@@ -32,7 +32,7 @@
       <p
         v-show="
           !provinceName &&
-            (parseInt(moment().weekday()) >= 4 ||
+            (parseInt(moment().weekday()) >= 3 ||
               parseInt(moment().weekday()) === 0)
         "
         class="has-text-centered font-size-6"
@@ -216,7 +216,7 @@ export default {
       precision: 1
     },
     pgRealAcomulado: null,
-    label2: 'Real Acomulado',
+    label2: 'Real Acumulado',
     readonly2: false,
     disabled2: false,
     outlined2: true,
@@ -268,7 +268,7 @@ export default {
       precision: 1
     },
     pcRealAcomulado: null,
-    label6: 'Real Acomulado',
+    label6: 'Real Acumulado',
     readonly6: false,
     disabled6: false,
     outlined6: true,
@@ -326,25 +326,25 @@ export default {
   },
   beforeMount() {
     const day = moment().weekday()
-    if (parseInt(day) >= 4) {
+    if (parseInt(day) >= 3) {
       this.$apollo.mutate({ mutation: resetListMutation }).then(({ data }) => {
         this.status1 = data.resetList
         console.log('aaaaa')
       })
     }
   },
-  mounted() {
-    if (this.updated) {
-      if (this.provincias.length === 0) {
-        this.$apollo
-          .mutate({ mutation: resetListMutation })
-          .then(({ data }) => {
-            this.status1 = data.resetList
-            this.$store.commit('setUpdated', false)
-          })
-      }
-    }
-  },
+  // mounted() {
+  //   if (this.updated) {
+  //     if (this.provincias.length === 0) {
+  //       this.$apollo
+  //         .mutate({ mutation: resetListMutation })
+  //         .then(({ data }) => {
+  //           this.status1 = data.resetList
+  //           this.$store.commit('setUpdated', false)
+  //         })
+  //     }
+  //   }
+  // },
   methods: {
     sendInfo() {
       const getDate = moment()

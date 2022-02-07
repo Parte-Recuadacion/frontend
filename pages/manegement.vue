@@ -230,18 +230,17 @@ export default {
         { name: 'Diciembre', value: 11 }
       ],
       years: [
-        { name: '2021', value: 0 },
-        { name: '2022', value: 1 },
-        { name: '2023', value: 2 },
-        { name: '2024', value: 3 },
-        { name: '2025', value: 4 },
-        { name: '2026', value: 5 },
-        { name: '2027', value: 6 },
-        { name: '2028', value: 7 },
-        { name: '2030', value: 8 },
-        { name: '2031', value: 9 },
-        { name: '2032', value: 10 },
-        { name: '2033', value: 11 }
+        { name: '2022', value: 0 },
+        { name: '2023', value: 1 },
+        { name: '2024', value: 2 },
+        { name: '2025', value: 3 },
+        { name: '2026', value: 4 },
+        { name: '2027', value: 5 },
+        { name: '2028', value: 6 },
+        { name: '2030', value: 7 },
+        { name: '2031', value: 8 },
+        { name: '2032', value: 9 },
+        { name: '2033', value: 10 }
       ],
       provincias: [
         {

@@ -1,5 +1,10 @@
 <template>
-  <v-app id="inspire">
+  <div class="has-text-centered">
+    <p class="font-size-7 margin-top-40">
+      *********** Sitio en desarrollo *************
+    </p>
+  </div>
+  <!--v-app id="inspire">
     <p class="has-text-right">
       {{
         moment()
@@ -181,13 +186,13 @@
         Enviar información</b-button
       >
     </div>
-  </v-app>
+  </v-app-->
 </template>
 
 <script>
 // Components && Vue
 import moment from 'moment'
-import VuetifyMoney from '~/components/VuetifyMoney.vue'
+// import VuetifyMoney from '~/components/VuetifyMoney.vue'
 
 // Apollo
 import insertaDataMutation from '~/apollo/mutations/insertData.graphql'
@@ -196,7 +201,7 @@ import resetListMutation from '~/apollo/mutations/resetList.graphql'
 
 export default {
   components: {
-    VuetifyMoney
+    // VuetifyMoney
   },
   data: () => ({
     moment,

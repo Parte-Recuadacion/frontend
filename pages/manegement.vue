@@ -310,6 +310,7 @@ export default {
             this.totalpgRealAcomulado = 0
             this.totalpcRealAcomulado = 0
             this.provinceData = data.provinceData.province
+            console.log(this.provinceData)
             for (let i = 0; i < this.provinceData.length; i++) {
               this.totalpgRealMes += parseFloat(
                 this.provinceData[i].presupuestoGlobal.pgRealMes

@@ -2,17 +2,29 @@ mutation provinceData($provincia: String!, $anno: String!, $mes: String!){
   provinceData(provincia: $provincia, anno: $anno, mes: $mes){
     province{
         nombre
-      presupuestoGlobal{
-        pgRealMes
-        pgRealAcomulado
-        pgEstimadoMes
-        pgEstimadoCierreAnno
-      }
       presupuestoCentral{
-        pcRealMes
-        pcRealAcomulado
-        pcEstimadoMes
-        pcEstimadoCierreAnno
+        centralPlanMes
+        centralPlanAcumulado
+        centralRealMes
+        centralRealAcumulado
+        centralEstimadoMes
+        centralEstimadoAcumulado
+      }
+      presupuestoSeguridadSocial{
+        socialPlanMes
+        socialPlanAcumulado
+        socialRealMes
+        socialRealAcumulado
+        socialEstimadoMes
+        socialEstimadoAcumulado
+      }
+      presupuestoLocal{
+        localPlanMes
+        localPlanAcumulado
+        localRealMes
+        localRealAcumulado
+        localEstimadoMes
+        localEstimadoAcumulado
       }
       enviadoA
     }

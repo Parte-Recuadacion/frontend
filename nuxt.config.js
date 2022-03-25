@@ -14,10 +14,10 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-  server: {
-    port: 3000, // default: 3000
-    host: '192.168.8.125' // default: localhost
-  },
+  // server: {
+  //   port: 3000, // default: 3000
+  //   host: '192.168.8.125' // default: localhost
+  // },
 
   /*
    ** Global CSS
@@ -33,7 +33,8 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
-    { src: '~/plugins/vuetify', ssr: false }
+    { src: '~/plugins/vuetify', ssr: false },
+    { src: '~/plugins/vuedarkmode.js' }
     // { src: '~/plugins/vuelidate' },
     // { src: '~/plugins/vue-select', ssr: false },
     // { src: '~/plugins/vue-excel-xlsx', ssr: false }
@@ -50,6 +51,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    '@nuxtjs/axios',
     'nuxt-buefy',
     'cookie-universal-nuxt',
     'nuxt-responsive-loader',

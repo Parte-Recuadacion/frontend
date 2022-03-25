@@ -1,33 +1,55 @@
 mutation insertData(
-    $dpa: String!,
-    $nombre: String!,
+    $dpa: String!
+    $nombre: String!
     $enviadoA: String!,
     $enviadoEstaSemana: Boolean!,
-    $mes: String!,
-    $anno: String!,
-    $pgRealMes: Float!,
-    $pgRealAcomulado: Float!,
-    $pgEstimadoMes: Float!,
-    $pgEstimadoCierreAnno: Float,
-    $pcRealMes: Float!,
-    $pcRealAcomulado: Float!,
-    $pcEstimadoMes: Float!,
-    $pcEstimadoCierreAnno: Float){
+    $mes: String!
+    $anno: String!
+    $centralPlanMes: Float!
+    $centralPlanAcumulado: Float!
+    $centralRealMes: Float!
+    $centralRealAcumulado: Float!
+    $centralEstimadoMes: Float!
+    $centralEstimadoAcumulado: Float!
+    $socialPlanMes: Float!
+    $socialPlanAcumulado: Float!
+    $socialRealMes: Float!
+    $socialRealAcumulado: Float!
+    $socialEstimadoMes: Float!
+    $socialEstimadoAcumulado: Float!
+    $localPlanMes: Float
+    $localPlanAcumulado: Float
+    $localRealMes: Float
+    $localRealAcumulado: Float
+    $localEstimadoMes: Float
+    $localEstimadoAcumulado: Float
+
+){
 insertData(
-  dpa:$dpa ,
-  nombre:$nombre ,
-  enviadoA:$enviadoA ,
-  enviadoEstaSemana:$enviadoEstaSemana ,
-  mes:$mes ,
-  anno:$anno ,
-  pgRealMes:$pgRealMes ,
-  pgRealAcomulado:$pgRealAcomulado ,
-  pgEstimadoMes:$pgEstimadoMes,
-  pgEstimadoCierreAnno:$pgEstimadoCierreAnno ,
-  pcRealMes:$pcRealMes ,
-  pcRealAcomulado:$pcRealAcomulado ,
-  pcEstimadoMes: $pcEstimadoMes,
-  pcEstimadoCierreAnno:$pcEstimadoCierreAnno
+    dpa: $dpa,
+    nombre: $nombre,
+    enviadoA: $enviadoA,
+    enviadoEstaSemana: $enviadoEstaSemana,
+    mes: $mes,
+    anno: $anno,
+    centralPlanMes: $centralPlanMes,
+    centralPlanAcumulado: $centralPlanAcumulado,
+    centralRealMes: $centralRealMes,
+    centralRealAcumulado: $centralRealAcumulado,
+    centralEstimadoMes: $centralEstimadoMes,
+    centralEstimadoAcumulado: $centralEstimadoAcumulado,
+    socialPlanMes: $socialPlanMes,
+    socialPlanAcumulado: $socialPlanAcumulado,
+    socialRealMes: $socialRealMes,
+    socialRealAcumulado: $socialRealAcumulado,
+    socialEstimadoMes: $socialEstimadoMes,
+    socialEstimadoAcumulado: $socialEstimadoAcumulado,
+    localPlanMes: $localPlanMes,
+    localPlanAcumulado: $localPlanAcumulado,
+    localRealMes: $localRealMes,
+    localRealAcumulado: $localRealAcumulado,
+    localEstimadoMes: $localEstimadoMes,
+    localEstimadoAcumulado: $localEstimadoAcumulado
 ){
   status
 }

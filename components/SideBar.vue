@@ -1,6 +1,10 @@
 <template>
   <div>
-    <b-button size="is-small" @mouseover="open = true"></b-button>
+    <b-button
+      size="is-small"
+      :style="getDarkMode ? 'background-color: black !important' : ''"
+      @mouseover="open = true"
+    ></b-button>
     <section>
       <b-sidebar
         v-model="open"
@@ -24,6 +28,12 @@ export default {
   data() {
     return {
       open: false
+    }
+  },
+
+  computed: {
+    getDarkMode() {
+      return this.$store.getters.getDarkMode
     }
   }
 }

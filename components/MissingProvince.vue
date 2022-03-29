@@ -11,7 +11,7 @@
     >
       <b
         class="menu-label is-hidden-touch has-text-centered margin-top-10"
-        style="color: #0855f5; font-size: 16px"
+        style="color: #4099FF; font-size: 16px"
       >
         Provincias que faltan
       </b>
@@ -27,11 +27,26 @@
           @click="chosenProvince(index)"
         >
           <button
+            v-show="!getDarkMode"
             class="is-primary is-fullwidth has-text-left"
-            style="height: 50px !important; width: 100%; padding-left: 25px; padding-right: 25px; border: solid #ced2e1 1pt"
+            style="height: 50px !important; width: 100%; padding-left: 25px; padding-right: 25px; border: solid #ced2e1 1pt; border-radius: 10px !important;"
             :style="
               selectedProvince.indexOf(Number(index)) !== -1
                 ? `border: solid #0855f5 1pt; box-shadow: 0 0 5px #0855f5`
+                : ''
+            "
+          >
+            <p style="font-size: 18px; padding-top: 7px">
+              {{ province.dpa + ' - ' + province.nombre }}
+            </p>
+          </button>
+          <button
+            v-show="getDarkMode"
+            class="is-primary is-fullwidth has-text-left"
+            style="height: 50px !important; width: 100%; padding-left: 25px; padding-right: 25px; border: solid #000000 1pt; background-color: #171717 !important; border-radius: 10px !important;"
+            :style="
+              selectedProvince.indexOf(Number(index)) !== -1
+                ? `border: solid #4099FF 1pt; box-shadow: 0 0 10px #4099FF; background-color: #4099FF !important;`
                 : ''
             "
           >
@@ -67,6 +82,9 @@ export default {
     },
     selectedProvince() {
       return this.$store.getters.getChosenProvince
+    },
+    getDarkMode() {
+      return this.$store.getters.getDarkMode
     }
   },
   beforeMount() {
@@ -83,6 +101,8 @@ export default {
       this.$store.commit('updateDpa', this.provinciasFaltantes[index].dpa)
       this.$store.commit('updateNombre', this.provinciasFaltantes[index].nombre)
       this.$store.commit('updateIndex', index)
+      this.$store.commit('setActualProvince', null)
+      this.$store.commit('setSendedInfo', false)
     }
   }
 }

@@ -7,10 +7,12 @@ $white: #ffffff;
 $black: #000000;
 $primary-invert: findColorInvert($primary);
 $warning-invert: findColorInvert($warning);
+$dark-invert: findColorInvert($dark);
 $twitter: #4099FF;
 $twitter-invert:  findColorInvert($twitter);
 $table-sticky-header-height: 700px;
 $dropdown-content-max-height: 500px;
+
 $colors: (
     "white": ($white, $black),
     "black": ($black, $white),
@@ -27,10 +29,8 @@ $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
 
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
 // _base.scss
-body, html {
+body {
     background-color: #fff;
     color: $dark;
     transition: background-color .2s ease, color .2s ease;
@@ -38,7 +38,7 @@ body, html {
 
 
 // _dark-mode.scss
-body, html {
+body {
     &.dark-mode {
         background-color: lighten($dark, 5%);
 
@@ -47,21 +47,47 @@ body, html {
                 color: #fff;
             }
         }
-      //color: #F7F8FB;
-      //button, .p-1, .b-sidebar, .sidebar-content.is-fullheight, .button.is-primary, fieldset[disabled] .button.is-primary, .navbar.is-primary, .navbar.is-primary .navbar.is-primary .navbar-item.has-dropdown:focus .navbar-link, .navbar.is-primary, .navbar-item.has-dropdown:hover, .navbar-link, .navbar.is-primary, .navbar-item.has-dropdown.is-active, .navbar-link, .v-application--wrap {
-      //  background: $dark !important;
-      //}
-      //.theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea, .v-input .v-label, p, span, a, input[placeholder], .select::placeholder, .textarea::placeholder, .autocomplete::placeholder, .field::placeholder {
-      //    color: white !important;
-      //    opacity: 1 !important;
-      //
-      //}
-      // input, .v-text-field > .v-input__control > .v-input__slot, .navbar-item.is-active .navbar-dropdown, .navbar-item.is-hoverable:focus .navbar-dropdown, .navbar-item.is-hoverable:focus-within .navbar-dropdown, .navbar-item.is-hoverable:hover .navbar-dropdown, .autocomplete, .control, .field, .autocomplete .dropdown-menu, .dropdown-content {
-      //  background: $dark !important;
-      //  }
-      //  a.dropdown-item:hover, .dropdown .dropdown-menu .has-link a:hover, button.dropdown-item:hover{
-      //      background-color: black !important;
-      //  }
+        color: #F7F8FB;
+      .p-1, .b-sidebar, .sidebar-content.is-fullheight, fieldset[disabled], .navbar.is-primary, .navbar.is-primary .navbar.is-primary .navbar-item.has-dropdown:focus .navbar-link, .navbar.is-primary, .navbar-item.has-dropdown:hover, .navbar-link, .navbar.is-primary, .navbar-item.has-dropdown.is-active, .navbar-link, .v-application--wrap {
+        background: $dark !important;
+      }
+        button, .button.is-primary{
+            background: $dark;
+        }
+      .theme--light.v-input, .theme--light.v-input input, .theme--light.v-input textarea, .v-input .v-label, p, span, a, input[placeholder], .select::placeholder, .textarea::placeholder, .autocomplete::placeholder, .field::placeholder {
+          color: white !important;
+          opacity: 1 !important;
+
+      }
+       input, .v-text-field > .v-input__control > .v-input__slot, .navbar-item.is-active .navbar-dropdown, .navbar-item.is-hoverable:focus .navbar-dropdown, .navbar-item.is-hoverable:focus-within .navbar-dropdown, .navbar-item.is-hoverable:hover .navbar-dropdown, .autocomplete, .control, .field, .autocomplete .dropdown-menu, .dropdown-content {
+        background: $dark !important;
+        }
+        a.dropdown-item:hover, .dropdown .dropdown-menu .has-link a:hover, button.dropdown-item:hover{
+            background-color: black !important;
+        }
+        input::placeholder, .select::placeholder, .autocomplete::placeholder{
+            color: #ffffff;
+            opacity: 0.7;
+            font-weight: 700;
+            font-size: 11pt
+        }
+        .dialog .modal-card .modal-card-head{
+            background: black !important;
+        }
+        .dialog .modal-card .modal-card-foot{
+            background: black !important;
+        }
+        .modal-card-body{
+            background: $dark !important;
+        }
+        .button:hover:enabled{
+            background: $twitter !important;
+            transition: background-color 1s ease;
+        }
+        .b-table .table, .th-wrap{
+            background: $mode-toggle-bg !important;
+            color: white !important;
+        }
     }
 }
 
@@ -75,7 +101,7 @@ body, html {
     height: 24px;
     min-width: 36px;
     min-height: 20px;
-    background-color: $mode-toggle-bg;
+    background-color: white;
     border: 0;
     border-radius: 24px;
     outline: 0;
@@ -122,7 +148,7 @@ body, html {
     }
 }
 
-body.dark-mode, html.dark-mode {
+body.dark-mode {
     .mode-toggle {
         background-color: lighten($mode-toggle-bg, 5%);
 
@@ -172,4 +198,5 @@ h1 {
     width: 100%;
     height: 100%;
 }
-
+@import "~bulma";
+@import "~buefy/src/scss/buefy";

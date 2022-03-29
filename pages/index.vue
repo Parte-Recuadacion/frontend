@@ -1,34 +1,54 @@
 <template>
-  <div class="has-text-centered" style="width: 95%; margin-left: 2.5%">
+  <div
+    class="has-text-centered margin-bottom-40"
+    style="width: 95%; margin-left: 2.5%"
+  >
     <SideBar />
     <br />
-
     <div class="columns is-centered" style="margin-top: 50px !important;">
       <div class="column is-12 margin-top-20">
-        <DarkMode />
         <transition name="fade">
-          <div v-if="provinceName">
-            <p class="has-text-centered font-size-7" style="color: #0855f5">
+          <div v-if="provinceName && !getSendedInfo">
+            <p class="has-text-centered font-size-7">
               {{ provinceDpa + ' - ' + provinceName }}
             </p>
           </div>
         </transition>
-
+        <img
+          v-show="getSendedInfo && getActualProvince !== null"
+          class="margin-top-40"
+          src="~/assets/correcto.png"
+          style="width: 250px; height: 250px"
+        />
+        <p
+          v-show="getSendedInfo && getActualProvince !== null"
+          class="font-size-3"
+        >
+          {{
+            'La provincia ' +
+              getActualProvince +
+              ' envió el parte de la recaudación correctamente'
+          }}
+        </p>
         <p
           v-show="
             !provinceName &&
               parseInt(moment().weekday()) < 3 &&
-              parseInt(moment().weekday()) !== 0
+              parseInt(moment().weekday()) !== 0 &&
+              !getSendedInfo &&
+              getActualProvince === null
           "
           class="has-text-centered font-size-6"
         >
-          * Seleccione su provincia en la parte izquierda
+          * Seleccione su provincia en la parte izquierda *
         </p>
         <p
           v-show="
             !provinceName &&
               (parseInt(moment().weekday()) >= 3 ||
-                parseInt(moment().weekday()) === 0)
+                parseInt(moment().weekday()) === 0) &&
+              !getSendedInfo &&
+              getActualProvince === null
           "
           class="has-text-centered font-size-6"
         >
@@ -38,16 +58,24 @@
           <p
             v-show="
               parseInt(moment().weekday()) < 3 &&
-                parseInt(moment().weekday()) !== 0
+                parseInt(moment().weekday()) !== 0 &&
+                !getSendedInfo &&
+                getActualProvince === null
             "
             class="has-text-centered"
           >
             * La información del parte debe enviarse en
-            <span style="color: #0855f5; font-weight: bold"
+            <span
+              style="color: #0855f5; font-weight: bold"
+              :style="getDarkMode ? 'color: #4099FF !important' : ''"
               >miles de pesos a un lugar después de la coma</span
             >
             todos los
-            <span style="color: #0855f5; font-weight: bold">lunes</span>
+            <span
+              style="color: #0855f5; font-weight: bold"
+              :style="getDarkMode ? 'color: #4099FF !important' : ''"
+              >lunes</span
+            >
             (o martes en casos excepcionales) antes las
             <span style="color: #0855f5; font-weight: bold">4:00pm</span>.
           </p>
@@ -55,23 +83,27 @@
           <p
             v-show="
               parseInt(moment().weekday()) < 3 &&
-                parseInt(moment().weekday()) !== 0
+                parseInt(moment().weekday()) !== 0 &&
+                !getSendedInfo &&
+                getActualProvince === null
             "
             class="has-text-centered"
             style="margin-top: -30px"
           >
             * Complete los presupuestos debajo y una vez que haya chequeado que
             todo esté correcto, hacer click en el botón
-            <span style="color: #0855f5; font-weight: bold"
+            <span
+              style="color: #0855f5; font-weight: bold"
+              :style="getDarkMode ? 'color: #4099FF !important' : ''"
               >Enviar información</span
             >.
           </p>
         </div>
         <div>
           <transition name="fade">
-            <div v-if="provinceName">
+            <div v-if="provinceName && !getSendedInfo">
               <!-- start presupuesto central -->
-              <div class="flex-wrap-center margin-top-30">
+              <div class="flex-wrap-center margin-top-20">
                 <div
                   class="column is-4"
                   style="border-right: solid #ced2e1 1pt; padding-top: 30px; padding-bottom: 30px"
@@ -79,6 +111,11 @@
                   <p
                     class="has-text-centered font-size-2 margin-bottom-10"
                     style="color: #0855f5; font-weight: bold"
+                    :style="
+                      getDarkMode
+                        ? 'color: #4099FF !important'
+                        : 'color: #0855f5'
+                    "
                   >
                     Presupuesto Central
                   </p>
@@ -178,6 +215,11 @@
                   <p
                     class="has-text-centered font-size-2 margin-bottom-10"
                     style="color: #0855f5; font-weight: bold"
+                    :style="
+                      getDarkMode
+                        ? 'color: #4099FF !important'
+                        : 'color: #0855f5'
+                    "
                   >
                     Presupuesto Seg. Social
                   </p>
@@ -275,11 +317,15 @@
                       provinceDpa !== 'C'
                   "
                   class="column is-4"
-                  style="padding-top: 20px; padding-bottom: 20px"
                 >
                   <p
                     class="has-text-centered font-size-2 margin-bottom-10"
                     style="color: #0855f5; font-weight: bold"
+                    :style="
+                      getDarkMode
+                        ? 'color: #4099FF !important'
+                        : 'color: #0855f5'
+                    "
                   >
                     Presupuesto Local
                   </p>
@@ -370,7 +416,7 @@
           </transition>
         </div>
         <transition name="fade">
-          <div v-if="provinceName" class="has-text-centered margin-top-30">
+          <div v-if="provinceName" class="has-text-centered margin-top-20">
             <b-button
               v-if="
                 provinceDpa !== 'F' &&
@@ -442,7 +488,6 @@
 // Components && Vue
 import moment from 'moment'
 import VuetifyMoney from '~/components/VuetifyMoney.vue'
-import DarkMode from '~/components/DarkMode.vue'
 import SideBar from '~/components/SideBar.vue'
 
 // Apollo
@@ -453,8 +498,7 @@ import resetListMutation from '~/apollo/mutations/resetList.graphql'
 export default {
   components: {
     VuetifyMoney,
-    SideBar,
-    DarkMode
+    SideBar
   },
 
   data: () => ({
@@ -711,6 +755,15 @@ export default {
     },
     updated() {
       return this.$store.getters.getUpdated
+    },
+    getDarkMode() {
+      return this.$store.getters.getDarkMode
+    },
+    getActualProvince() {
+      return this.$store.getters.getActualProvince
+    },
+    getSendedInfo() {
+      return this.$store.getters.getSendedInfo
     }
   },
   beforeMount() {
@@ -824,6 +877,8 @@ export default {
                       this.localEstimadoMes = null
                       this.localEstimadoAcumulado = null
                       const index = this.$store.getters.getIndex
+                      this.$store.commit('setActualProvince', this.provinceName)
+                      this.$store.commit('setSendedInfo', true)
                       this.$store.commit('deleteProvince', index)
                       this.$store.commit('updateDpa', null)
                       this.$store.commit('updateNombre', null)
@@ -832,6 +887,7 @@ export default {
                       this.$buefy.toast.open(
                         'Se envió la información del parte'
                       )
+                      this.sendedInfo = true
                     }
                   })
               }
@@ -855,10 +911,10 @@ hr {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s;
+  /*transition: opacity 1s;*/
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+  /*opacity: 0;*/
 }
 #inspire {
   padding: 50px;

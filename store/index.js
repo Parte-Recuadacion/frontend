@@ -6,10 +6,16 @@ export const state = () => ({
   selectedProvince: [],
   color: 'light',
   value: false,
-  updated: false
+  updated: false,
+  isDarkModeActive: false,
+  actualProvince: null,
+  sendedInfo: false
 })
 
 export const mutations = {
+  setSendedInfo(state, value) {
+    state.sendedInfo = value
+  },
   updateDpa(state, dpa) {
     state.dpa = dpa
   },
@@ -32,11 +38,17 @@ export const mutations = {
   updateColor(state, color) {
     state.color = color
   },
+  updateDarkMode(state, value) {
+    state.isDarkModeActive = value
+  },
   updateValue(state, value) {
     state.value = value
   },
   setUpdated(state, value) {
     state.update = value
+  },
+  setActualProvince(state, value) {
+    state.actualProvince = value
   }
 }
 export const getters = {
@@ -63,5 +75,14 @@ export const getters = {
   },
   getUpdated: state => {
     return state.value
+  },
+  getDarkMode: state => {
+    return state.isDarkModeActive
+  },
+  getActualProvince: state => {
+    return state.actualProvince
+  },
+  getSendedInfo: state => {
+    return state.sendedInfo
   }
 }

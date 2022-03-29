@@ -26,12 +26,14 @@ export default {
     dark() {
       document.querySelector('body').classList.add('dark-mode')
       this.darkMode = true
+      this.$store.commit('updateDarkMode', true)
       this.$emit('dark')
     },
 
     light() {
       document.querySelector('body').classList.remove('dark-mode')
       this.darkMode = false
+      this.$store.commit('updateDarkMode', false)
       this.$emit('light')
     },
 

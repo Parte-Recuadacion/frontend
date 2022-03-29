@@ -10,6 +10,8 @@
       </b-navbar-item>
     </template>
     <template #end>
+      <DarkMode />
+
       <b-navbar-dropdown
         class="margin-right-30 font-size-4"
         label="Administracion"
@@ -30,7 +32,10 @@
 </template>
 
 <script>
-export default {}
+import DarkMode from '~/components/DarkMode'
+export default {
+  components: { DarkMode }
+}
 </script>
 
 <style scoped></style>

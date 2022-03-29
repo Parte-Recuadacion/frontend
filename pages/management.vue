@@ -98,12 +98,7 @@
                     Presupuesto Central
                   </p>
                   <hr />
-                  <b-table
-                    v-if="provinceData"
-                    ref="table"
-                    :data="provinceData"
-                    hoverable
-                  >
+                  <b-table v-if="provinceData" ref="table" :data="provinceData">
                     <b-table-column v-slot="props" label="Fecha que se envió">
                       {{
                         moment(props.row.enviadoA)
@@ -203,12 +198,7 @@
                   </p>
 
                   <hr />
-                  <b-table
-                    v-if="provinceData"
-                    ref="table"
-                    :data="provinceData"
-                    hoverable
-                  >
+                  <b-table v-if="provinceData" ref="table" :data="provinceData">
                     <b-table-column v-slot="props" label="Fecha que se envió">
                       {{
                         moment(props.row.enviadoA)
@@ -312,12 +302,7 @@
                     Presupuesto Local
                   </p>
                   <hr />
-                  <b-table
-                    v-if="provinceData"
-                    ref="table"
-                    :data="provinceData"
-                    hoverable
-                  >
+                  <b-table v-if="provinceData" ref="table" :data="provinceData">
                     <b-table-column v-slot="props" label="Fecha que se envió">
                       {{
                         moment(props.row.enviadoA)
